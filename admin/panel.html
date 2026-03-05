@@ -319,7 +319,19 @@
     async function loadMembers() {
       try {
         const data = await getData('members');
-        membersData = data ? (Array.isArray(data) ? data.map((m,i) => ({...m, _key: i})) : Object.entries(data).map(([k,v]) => ({...v, _key: k}))) : LOCAL_DATA.members;
+        // Start with LOCAL_DATA members as base
+        let base = [...LOCAL_DATA.members];
+        if (data) {
+          const firebaseMembers = Array.isArray(data)
+            ? data.map((m, i) => ({ ...m, _key: i }))
+            : Object.entries(data).map(([k, v]) => ({ ...v, _key: k }));
+          // Add only Firebase members not already in LOCAL_DATA
+          const localIds = new Set(LOCAL_DATA.members.map(m => m.id));
+          const newOnes = firebaseMembers.filter(m => !localIds.has(m.id));
+          membersData = [...base, ...newOnes];
+        } else {
+          membersData = base;
+        }
       } catch (e) {
         membersData = LOCAL_DATA.members;
       }
