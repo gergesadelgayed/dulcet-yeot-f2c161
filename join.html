@@ -32,12 +32,15 @@
       <li><a href="achievements.html">[ Achievements ]</a></li>
       <li><a href="login.html" class="btn-login nav-login-link">Login</a></li>
     </ul>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <main>
     <div class="page-header">
       <span class="section-tag">// Recruitment</span>
-      <h1 style="font-family:var(--font-display);color:white;">Join <span style="color:var(--accent2);text-shadow:var(--glow);">EL FLA7EN</span></h1>
+      <h1 style="font-family:var(--font-display);color:white;">Join <span class="txt-blue">EL FLA7EN</span></h1>
       <p>Join an elite cybersecurity team</p>
     </div>
 
@@ -298,7 +301,7 @@
             <div style="font-size:4rem;margin-bottom:1.5rem;">✅</div>
             <h3 style="font-family:var(--font-display);color:var(--green);margin-bottom:1rem;">Application Submitted!</h3>
             <p style="color:var(--text-dim);font-size:0.9rem;line-height:1.8;">
-              Thank you <strong style="color:var(--accent2);">${application.fullName}</strong>!<br>
+              Thank you <strong class="txt-blue">${application.fullName}</strong>!<br>
               Your application was submitted. We will review it within 3-5 days<br>
               and contact you at: <span style="color:var(--cyan);">${application.email}</span>
             </p>
@@ -314,5 +317,6 @@
       }
     });
   </script>
+  <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
 </body>
 </html>

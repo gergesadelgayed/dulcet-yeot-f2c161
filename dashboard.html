@@ -24,6 +24,9 @@
       <li><a href="achievements.html">[ Achievements ]</a></li>
       <li><a href="#" class="btn-login" id="logoutBtn">Logout</a></li>
     </ul>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <div class="dashboard-layout" style="padding-top:65px;">
@@ -63,7 +66,7 @@
             <div class="label">Writeups</div>
           </div>
           <div class="stat-card">
-            <div class="num" style="color:var(--green);">6</div>
+            <div class="num" class="txt-blue">6</div>
             <div class="label">CTFs Joined</div>
           </div>
           <div class="stat-card">
@@ -124,8 +127,8 @@
           </div>
           <div class="terminal-body">
             <div class="terminal-line"><span class="terminal-prompt">$</span><span class="terminal-cmd"> status --team</span></div>
-            <div class="terminal-out">[+] Team Status: <span style="color:var(--green);">ACTIVE</span></div>
-            <div class="terminal-out">[+] Active Members: <span style="color:var(--accent2);">6</span></div>
+            <div class="terminal-out">[+] Team Status: <span class="txt-blue">ACTIVE</span></div>
+            <div class="terminal-out">[+] Active Members: <span class="txt-blue">6</span></div>
             <div class="terminal-out">[+] Next CTF: <span style="color:var(--yellow);">Active DFIR Competitions</span></div>
             <div class="terminal-out">[+] Current Focus: <span style="color:var(--cyan);">DFIR &amp; Web Security</span></div>
           </div>
@@ -248,8 +251,8 @@
         grid.innerHTML = achs.slice(0, 6).map(a => `
           <div class="card" style="text-align:center;">
             <div style="font-size:2.5rem;margin-bottom:0.8rem;">${a.icon}</div>
-            <div style="font-family:var(--font-display);font-size:0.85rem;color:var(--accent2);margin-bottom:0.5rem;">${a.title}</div>
-            <span class="badge badge-purple">${a.place}</span>
+            <div style="font-family:var(--font-display);font-size:0.85rem;color:var(--accent2);margin-bottom:0.5rem;">${sanitize(a.title)}</div>
+            <span class="badge badge-purple">${sanitize(a.place)}</span>
           </div>
         `).join('');
       } catch (e) {
@@ -259,5 +262,6 @@
 
     function saveProfile() { showNotif('Profile saved successfully!', 'success'); }
   </script>
+  <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
 </body>
 </html>

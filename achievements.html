@@ -34,12 +34,15 @@
       <li><a href="writeups.html">[ Writeups ]</a></li>
       <li><a href="login.html" class="btn-login nav-login-link">[ Login ]</a></li>
     </ul>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <main>
     <div class="page-header" style="background:radial-gradient(ellipse at 50% 0%,rgba(0,255,65,0.05),transparent 70%);">
-      <span class="section-tag" style="color:var(--green);">// Progress Tracker</span>
-      <h1 style="font-family:var(--font-display);color:white;">Team <span style="color:var(--green);text-shadow:var(--glow-green-strong);">Progress</span></h1>
+      <span class="section-tag" class="txt-blue">// Progress Tracker</span>
+      <h1 style="font-family:var(--font-display);color:white;">Team <span class="txt-green">Progress</span></h1>
       <p>Honest milestones — where we are and where we're heading</p>
     </div>
 
@@ -48,7 +51,7 @@
       <div class="honest-note">
         <span style="font-size:1.5rem;flex-shrink:0;">📋</span>
         <div>
-          <strong style="color:var(--green);">About This Page</strong><br>
+          <strong class="txt-blue">About This Page</strong><br>
           We keep this section honest. We haven't won any competitions yet — but we're actively training,
           solving CTF challenges, and competing in DFIR events. Every milestone listed here is real.
           We're proud of the progress we're making and we're only going up.
@@ -58,7 +61,7 @@
       <!-- Stats -->
       <div class="stats-banner">
         <div class="stat-card">
-          <div class="num" style="color:var(--green);text-shadow:var(--glow-green);">30+</div>
+          <div class="num" class="txt-green">30+</div>
           <div class="label">CTFs Solved</div>
         </div>
         <div class="stat-card">
@@ -70,7 +73,7 @@
           <div class="label">Active Members</div>
         </div>
         <div class="stat-card">
-          <div class="num" style="color:var(--accent2);">DFIR</div>
+          <div class="num" class="txt-blue">DFIR</div>
           <div class="label">Current Focus</div>
         </div>
       </div>
@@ -90,9 +93,9 @@
       <!-- Future Goals -->
       <div style="max-width:900px;margin:4rem auto 0;">
         <div class="section-header">
-          <span class="section-tag" style="color:var(--green);">// Goals</span>
-          <h2 class="section-title" style="font-size:1.6rem;">What We're <span style="color:var(--green);">Aiming For</span></h2>
-          <div class="section-line" style="background:linear-gradient(90deg,transparent,var(--green2),transparent);"></div>
+          <span class="section-tag" class="txt-blue">// Goals</span>
+          <h2 class="section-title" style="font-size:1.6rem;">What We're <span class="txt-blue">Aiming For</span></h2>
+          <div class="section-line" ></div>
         </div>
         <div class="grid-3">
           <div class="card" style="text-align:center;opacity:0.7;border-style:dashed;">
@@ -189,5 +192,6 @@
 
     loadAchievements();
   </script>
+  <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
 </body>
 </html>

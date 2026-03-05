@@ -50,12 +50,15 @@
       <li><a href="achievements.html">[ Achievements ]</a></li>
       <li><a href="login.html" class="btn-login nav-login-link">Login</a></li>
     </ul>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <main>
     <div class="page-header">
       <span class="section-tag">// Knowledge Base</span>
-      <h1 style="font-family:var(--font-display);color:white;">CTF <span style="color:var(--accent2);text-shadow:var(--glow);">Writeups</span></h1>
+      <h1 style="font-family:var(--font-display);color:white;">CTF <span class="txt-blue">Writeups</span></h1>
       <p>Detailed solutions and techniques — sharing knowledge with the community</p>
     </div>
 
@@ -103,7 +106,7 @@
             </div>
             <div class="upload-zone" id="uploadZone">
               <div style="font-size:2rem;margin-bottom:0.5rem;">📄</div>
-              <p style="color:var(--text-dim);font-size:0.85rem;">Drop PDF/Markdown writeup here or <span style="color:var(--accent2);">click to browse</span></p>
+              <p style="color:var(--text-dim);font-size:0.85rem;">Drop PDF/Markdown writeup here or <span class="txt-blue">click to browse</span></p>
               <input type="file" id="fileInput" style="display:none;" accept=".pdf,.md,.txt">
               <p id="fileName" style="color:var(--green);font-size:0.8rem;margin-top:0.5rem;"></p>
             </div>
@@ -164,18 +167,18 @@
         return;
       }
       grid.innerHTML = wps.map(w => `
-        <div class="card writeup-card" data-cat="${w.category}">
+        <div class="card writeup-card" data-cat="${sanitize(w.category)}">
           <div class="writeup-meta">
-            <span class="badge badge-purple">${CAT_ICONS[w.category] || '🎯'} ${w.category}</span>
-            <span class="diff-badge diff-${w.difficulty}">${w.difficulty}</span>
-            <span style="font-size:0.7rem;color:var(--text-dim);">${w.ctf || ''}</span>
+            <span class="badge badge-purple">${CAT_ICONS[w.category] || '🎯'} ${sanitize(w.category)}</span>
+            <span class="diff-badge diff-${sanitize(w.difficulty)}">${sanitize(w.difficulty)}</span>
+            <span style="font-size:0.7rem;color:var(--text-dim);">${sanitize(w.ctf || '')}</span>
           </div>
-          <h3 class="writeup-title"><a href="${w.url || '#'}">${w.title}</a></h3>
-          <p class="writeup-desc">${w.description || ''}</p>
+          <h3 class="writeup-title"><a href="${safeUrl(w.url || '#')}">${sanitize(w.title)}</a></h3>
+          <p class="writeup-desc">${sanitize(w.description || '')}</p>
           <div class="writeup-footer">
-            <span>✍️ ${w.author}</span>
+            <span>✍️ ${sanitize(w.author)}</span>
             <span>${w.date ? new Date(w.date).toLocaleDateString('en-GB') : ''}</span>
-            <a href="${w.url || '#'}" style="color:var(--accent2);text-decoration:none;font-size:0.75rem;">&gt; Read More</a>
+            <a href="${safeUrl(w.url || '#')}" style="color:var(--accent2);text-decoration:none;font-size:0.75rem;">&gt; Read More</a>
           </div>
         </div>
       `).join('');
@@ -261,5 +264,6 @@
 
     loadWriteups();
   </script>
+  <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
 </body>
 </html>
