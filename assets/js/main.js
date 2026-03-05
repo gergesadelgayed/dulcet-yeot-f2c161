@@ -128,7 +128,7 @@ async function hashPassword(password) {
   } catch (_) { return password; }
 }
 
-const ADMIN_HASH = 'e3b8f1a2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e4f6a8b0c2d4e6f8';
+const ADMIN_HASH = '4b17a5f7f268bba20defc23b006d632351a115e1d22f4c2a34cabef5a8f86612';
 const ADMIN_EMAIL = 'admin@elfla7en.ctf';
 
 // ===== TEAM DATA =====
