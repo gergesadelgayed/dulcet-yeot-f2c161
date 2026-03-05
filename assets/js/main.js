@@ -1,13 +1,14 @@
 // ===== FIREBASE CONFIG =====
 // Replace these values with your Firebase project config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCwXxq3oLkh-HSehS9TOeil2P9jLMQjShI",
+  authDomain: "elfla7en.firebaseapp.com",
+  databaseURL: "https://elfla7en-default-rtdb.firebaseio.com",
+  projectId: "elfla7en",
+  storageBucket: "elfla7en.firebasestorage.app",
+  messagingSenderId: "321009240746",
+  appId: "1:321009240746:web:e4b8aad6983c087b441ed3",
+  measurementId: "G-XXZJVPVSBP"
 };
 
 let db = null;
