@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join | EL FLA7EN</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .join-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1100px; margin: 0 auto; align-items: start; }
+    @media(max-width:768px) { .join-layout { grid-template-columns: 1fr; gap: 2rem; } }
+    .requirements li { font-size: 0.82rem; color: var(--text-dim); padding: 8px 0; border-bottom: 1px solid var(--border); line-height: 1.6; }
+    .requirements li::before { content: '✓ '; color: var(--green); }
+    .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 2.5rem; }
+    .form-card:hover { border-color: var(--accent); box-shadow: var(--glow); }
+    .skills-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }
+    .skill-check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-dim); cursor: pointer; }
+    .skill-check input { accent-color: var(--accent); }
+    .skill-check:hover { color: var(--accent2); }
+    .progress-steps { display: flex; gap: 0; margin-bottom: 2rem; }
+    .step { flex: 1; text-align: center; padding: 10px; font-size: 0.7rem; letter-spacing: 1px; border-bottom: 2px solid var(--border); color: var(--text-dim); }
+    .step.active { border-bottom-color: var(--accent); color: var(--accent2); }
+    .step.done { border-bottom-color: var(--green); color: var(--green); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">EL_FLA7EN<span>://</span>SEC</a>
+    <ul class="nav-links">
+      <li><a href="team.html">[ Team ]</a></li>
+      <li><a href="join.html" class="active">[ Join ]</a></li>
+      <li><a href="writeups.html">[ Writeups ]</a></li>
+      <li><a href="achievements.html">[ Achievements ]</a></li>
+      <li><a href="login.html" class="btn-login nav-login-link">Login</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <span class="section-tag">// Recruitment</span>
+      <h1 style="font-family:var(--font-display);color:white;">Join <span style="color:var(--accent2);text-shadow:var(--glow);">EL FLA7EN</span></h1>
+      <p>Join an elite cybersecurity team</p>
+    </div>
+
+    <section class="section">
+      <div class="join-layout">
+        <!-- LEFT: Requirements -->
+        <div>
+          <div class="terminal" style="margin-bottom:2rem;">
+            <div class="terminal-header">
+              <div class="terminal-dot red"></div>
+              <div class="terminal-dot yellow"></div>
+              <div class="terminal-dot green"></div>
+              <span class="terminal-title">recruitment_policy.txt</span>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line"><span class="terminal-prompt">$</span><span class="terminal-cmd"> cat requirements.txt</span></div>
+              <br>
+              <div style="color:var(--accent2);font-size:0.85rem;margin-bottom:0.5rem;">[+] Core Requirements:</div>
+            </div>
+          </div>
+
+          <ul class="requirements" style="list-style:none;margin-bottom:2rem;">
+            <li>Genuine passion for cybersecurity and CTF challenges</li>
+            <li>Basic experience in at least one field (Web, DFIR, Forensics, OSINT)</li>
+            <li>Ability to work in a team and communicate effectively</li>
+            <li>Commitment to ethical hacking principles and legal standards</li>
+            <li>Willingness to learn continuously and participate in competitions</li>
+            <li>Good knowledge of Linux and basic security tools</li>
+          </ul>
+
+          <div class="card">
+            <h3 style="font-family:var(--font-display);font-size:0.9rem;color:var(--accent2);margin-bottom:1rem;">📋 Application Process</h3>
+            <div class="timeline" style="padding-left:1.5rem;">
+              <div class="timeline-item">
+                <div class="timeline-date">STEP 01</div>
+                <div class="timeline-title">Submit Application</div>
+                <div class="timeline-desc">Fill out the join form with your information</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">STEP 02</div>
+                <div class="timeline-title">Review</div>
+                <div class="timeline-desc">The leadership team reviews your application within 3-5 days</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">STEP 03</div>
+                <div class="timeline-title">Technical Challenge</div>
+                <div class="timeline-desc">We send you a small CTF challenge to test your skills</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">STEP 04</div>
+                <div class="timeline-title">Interview</div>
+                <div class="timeline-desc">Short interview via Discord</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-date">STEP 05</div>
+                <div class="timeline-title">Join 🎉</div>
+                <div class="timeline-desc">Welcome to EL FLA7EN!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div>
+          <div class="form-card">
+            <div class="progress-steps">
+              <div class="step active" id="step-indicator-1">01_INFO</div>
+              <div class="step" id="step-indicator-2">02_SKILLS</div>
+              <div class="step" id="step-indicator-3">03_SUBMIT</div>
+            </div>
+
+            <div id="alertBox"></div>
+
+            <form id="joinForm">
+              <!-- STEP 1 -->
+              <div id="formStep1">
+                <div class="form-group">
+                  <label class="form-label">Full Name</label>
+                  <input type="text" class="form-input" id="fullName" placeholder="Ahmed El Hacker" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Age</label>
+                  <input type="number" class="form-input" id="age" min="15" max="40" placeholder="20" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" class="form-input" id="email" placeholder="hacker@ctf.com" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">LinkedIn URL (optional)</label>
+                  <input type="url" class="form-input" id="linkedin" placeholder="https://linkedin.com/in/...">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">CTF Platform Username (e.g. HackTheBox, TryHackMe)</label>
+                  <input type="text" class="form-input" id="ctfUsername" placeholder="h4cker_123">
+                </div>
+                <button type="button" class="btn btn-primary" style="width:100%;" onclick="nextStep(2)">&gt; Next: Skills</button>
+              </div>
+
+              <!-- STEP 2 -->
+              <div id="formStep2" style="display:none;">
+                <div class="form-group">
+                  <label class="form-label">Primary Specialty</label>
+                  <select class="form-select" id="specialty" required>
+                    <option value="">-- Select Specialty --</option>
+                    <option value="Web Security">Web Security</option>
+                    <option value="Reverse Engineering">Reverse Engineering</option>
+                    <option value="Cryptography">Cryptography</option>
+                    <option value="Network Security">Network Security</option>
+                    <option value="OSINT">OSINT</option>
+                    <option value="Binary Exploitation">Binary Exploitation (Pwn)</option>
+                    <option value="Forensics">Digital Forensics</option>
+                    <option value="Mobile Security">Mobile Security</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Skills (select all that apply)</label>
+                  <div class="skills-checkboxes">
+                    <label class="skill-check"><input type="checkbox" name="skills" value="Python"> Python</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="Linux"> Linux</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="CTF"> CTF Experience</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="BurpSuite"> Burp Suite</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="Metasploit"> Metasploit</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="Wireshark"> Wireshark</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="Ghidra"> Ghidra/IDA</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="Assembly"> Assembly</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="OSINT Tools"> OSINT Tools</label>
+                    <label class="skill-check"><input type="checkbox" name="skills" value="Docker"> Docker</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Experience Level</label>
+                  <select class="form-select" id="level">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                  </select>
+                </div>
+                <div style="display:flex;gap:1rem;">
+                  <button type="button" class="btn btn-outline" style="flex:1;" onclick="nextStep(1)">&lt; Back</button>
+                  <button type="button" class="btn btn-primary" style="flex:2;" onclick="nextStep(3)">&gt; Next: Message</button>
+                </div>
+              </div>
+
+              <!-- STEP 3 -->
+              <div id="formStep3" style="display:none;">
+                <div class="form-group">
+                  <label class="form-label">Why do you want to join?</label>
+                  <textarea class="form-textarea" id="reason" placeholder="Explain your motivation to join. What sets you apart?" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Your top CTF or security achievements</label>
+                  <textarea class="form-textarea" id="achievements" placeholder="e.g. Solved 500pts in PicoCTF, found a bug in..." rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">How did you hear about us?</label>
+                  <select class="form-select" id="referral">
+                    <option value="Social Media">Social Media</option>
+                    <option value="Friend">Friend / Colleague</option>
+                    <option value="CTF Platform">CTF Platform</option>
+                    <option value="Conference">Conference / Event</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div style="display:flex;gap:1rem;">
+                  <button type="button" class="btn btn-outline" style="flex:1;" onclick="nextStep(2)">&lt; Back</button>
+                  <button type="submit" class="btn btn-primary" style="flex:2;" id="submitBtn">&gt; Submit Application</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="footer-logo">EL_FLA7EN://SEC</span>
+    <p>&copy; 2025 EL FLA7EN Cyber Security Team — All rights reserved</p>
+    <div class="footer-credit">web made by : <span>Gerges Adel</span></div>
+  </footer>
+
+    <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    let currentStep = 1;
+
+    function nextStep(step) {
+      if (step > currentStep) {
+        // Validate current step
+        if (currentStep === 1) {
+          const name = document.getElementById('fullName').value;
+          const age = document.getElementById('age').value;
+          const email = document.getElementById('email').value;
+          if (!name || !age || !email) {
+            showAlert('Please fill in all required fields.', 'error');
+            return;
+          }
+          if (parseInt(age) < 15 || parseInt(age) > 60) {
+            showAlert('Please enter a valid age (15-60).', 'error');
+            return;
+          }
+        }
+        if (currentStep === 2) {
+          const specialty = document.getElementById('specialty').value;
+          if (!specialty) {
+            showAlert('Please select your specialty.', 'error');
+            return;
+          }
+        }
+      }
+
+      document.getElementById(`formStep${currentStep}`).style.display = 'none';
+      document.getElementById(`step-indicator-${currentStep}`).className = 'step done';
+      
+      currentStep = step;
+      document.getElementById(`formStep${step}`).style.display = 'block';
+      document.getElementById(`step-indicator-${step}`).className = 'step active';
+    }
+
+    function showAlert(msg, type) {
+      const box = document.getElementById('alertBox');
+      box.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+      setTimeout(() => box.innerHTML = '', 4000);
+    }
+
+    document.getElementById('joinForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+      btn.disabled = true;
+
+      const skills = [...document.querySelectorAll('input[name="skills"]:checked')].map(i => i.value);
+
+      const application = {
+        fullName: document.getElementById('fullName').value,
+        age: document.getElementById('age').value,
+        email: document.getElementById('email').value,
+        linkedin: document.getElementById('linkedin').value,
+        ctfUsername: document.getElementById('ctfUsername').value,
+        specialty: document.getElementById('specialty').value,
+        skills: skills,
+        level: document.getElementById('level').value,
+        reason: document.getElementById('reason').value,
+        achievements: document.getElementById('achievements').value,
+        referral: document.getElementById('referral').value,
+        status: 'pending',
+        submittedAt: new Date().toISOString()
+      };
+
+      try {
+        await pushData('applications', application);
+        document.getElementById('joinForm').innerHTML = `
+          <div style="text-align:center;padding:2rem;">
+            <div style="font-size:4rem;margin-bottom:1.5rem;">✅</div>
+            <h3 style="font-family:var(--font-display);color:var(--green);margin-bottom:1rem;">Application Submitted!</h3>
+            <p style="color:var(--text-dim);font-size:0.9rem;line-height:1.8;">
+              Thank you <strong style="color:var(--accent2);">${application.fullName}</strong>!<br>
+              Your application was submitted. We will review it within 3-5 days<br>
+              and contact you at: <span style="color:var(--cyan);">${application.email}</span>
+            </p>
+            <br>
+            <a href="index.html" class="btn btn-outline">&lt; Back to Home</a>
+          </div>
+        `;
+        document.querySelector('.progress-steps').style.display = 'none';
+      } catch (err) {
+        showAlert('An error occurred. Please try again.', 'error');
+        btn.innerHTML = '&gt; Submit Application';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

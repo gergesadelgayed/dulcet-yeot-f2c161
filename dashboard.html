@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | EL FLA7EN</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .welcome-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem; }
+    .welcome-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent3), var(--bg3)); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.5rem; color: white; flex-shrink: 0; }
+    .section-heading { font-family: var(--font-display); font-size: 0.85rem; color: var(--accent2); letter-spacing: 2px; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .activity-item { display: flex; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid var(--border); align-items: center; }
+    .activity-icon { font-size: 1.2rem; width: 30px; text-align: center; flex-shrink: 0; }
+    .activity-text { font-size: 0.82rem; color: var(--text-dim); flex: 1; }
+    .activity-time { font-size: 0.72rem; color: var(--text-dim); white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">EL_FLA7EN<span>://</span>SEC</a>
+    <ul class="nav-links">
+      <li><a href="team.html">[ Team ]</a></li>
+      <li><a href="writeups.html">[ Writeups ]</a></li>
+      <li><a href="achievements.html">[ Achievements ]</a></li>
+      <li><a href="#" class="btn-login" id="logoutBtn">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="dashboard-layout" style="padding-top:65px;">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div style="padding:1.5rem;border-bottom:1px solid var(--border);">
+        <div style="font-family:var(--font-display);font-size:0.75rem;color:var(--accent2);letter-spacing:2px;">MEMBER PORTAL</div>
+      </div>
+      <a href="#overview" class="sidebar-item active" onclick="showSection('overview')">📊 Overview</a>
+      <a href="#writeups" class="sidebar-item" onclick="showSection('writeups')">📝 My Writeups</a>
+      <a href="#achievements" class="sidebar-item" onclick="showSection('achievements')">🏆 Achievements</a>
+      <a href="#profile" class="sidebar-item" onclick="showSection('profile')">👤 Profile</a>
+      <a href="#settings" class="sidebar-item" onclick="showSection('settings')">⚙️ Settings</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="dashboard-content">
+      
+      <!-- OVERVIEW -->
+      <div id="section-overview">
+        <div class="welcome-bar">
+          <div class="welcome-avatar" id="userAvatar">?</div>
+          <div>
+            <div style="font-family:var(--font-display);font-size:1rem;color:white;" id="welcomeName">Welcome back!</div>
+            <div style="font-size:0.8rem;color:var(--text-dim);" id="welcomeRole">Member</div>
+            <div style="font-size:0.75rem;color:var(--green);margin-top:0.3rem;">● Online</div>
+          </div>
+          <div style="margin-left:auto;text-align:right;">
+            <div style="font-size:0.7rem;color:var(--text-dim);">Last login</div>
+            <div style="font-size:0.8rem;color:var(--accent2);" id="lastLogin">--</div>
+          </div>
+        </div>
+
+        <div class="grid-4" style="margin-bottom:2rem;">
+          <div class="stat-card">
+            <div class="num">0</div>
+            <div class="label">Writeups</div>
+          </div>
+          <div class="stat-card">
+            <div class="num" style="color:var(--green);">6</div>
+            <div class="label">CTFs Joined</div>
+          </div>
+          <div class="stat-card">
+            <div class="num" style="color:var(--yellow);">3</div>
+            <div class="label">Wins</div>
+          </div>
+          <div class="stat-card">
+            <div class="num" style="color:var(--cyan);">42</div>
+            <div class="label">Flags Captured</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="section-heading">&gt; Recent Activity</div>
+            <div class="activity-item">
+              <span class="activity-icon">🏆</span>
+              <span class="activity-text">Team won 1st place in AC3 CTF 2024</span>
+              <span class="activity-time">2d ago</span>
+            </div>
+            <div class="activity-item">
+              <span class="activity-icon">📝</span>
+              <span class="activity-text">New writeup published: AC3 Web Challenges</span>
+              <span class="activity-time">3d ago</span>
+            </div>
+            <div class="activity-item">
+              <span class="activity-icon">👤</span>
+              <span class="activity-text">New member joined the team</span>
+              <span class="activity-time">1w ago</span>
+            </div>
+            <div class="activity-item">
+              <span class="activity-icon">🔐</span>
+              <span class="activity-text">CVE disclosed and patched</span>
+              <span class="activity-time">2w ago</span>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="card">
+            <div class="section-heading">&gt; Quick Actions</div>
+            <div style="display:flex;flex-direction:column;gap:0.8rem;">
+              <a href="writeups.html" class="btn btn-outline" style="text-align:center;">&gt; Upload Writeup</a>
+              <a href="achievements.html" class="btn btn-outline" style="text-align:center;">&gt; View Achievements</a>
+              <a href="team.html" class="btn btn-outline" style="text-align:center;">&gt; Team Members</a>
+              <button class="btn btn-outline" onclick="showSection('profile')" style="text-align:center;">&gt; Edit Profile</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal snippet -->
+        <div class="terminal" style="margin-top:2rem;">
+          <div class="terminal-header">
+            <div class="terminal-dot red"></div>
+            <div class="terminal-dot yellow"></div>
+            <div class="terminal-dot green"></div>
+            <span class="terminal-title">member_shell — elfla7en@ctf</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="terminal-prompt">$</span><span class="terminal-cmd"> status --team</span></div>
+            <div class="terminal-out">[+] Team Status: <span style="color:var(--green);">ACTIVE</span></div>
+            <div class="terminal-out">[+] Active Members: <span style="color:var(--accent2);">6</span></div>
+            <div class="terminal-out">[+] Next CTF: <span style="color:var(--yellow);">Active DFIR Competitions</span></div>
+            <div class="terminal-out">[+] Current Focus: <span style="color:var(--cyan);">DFIR &amp; Web Security</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WRITEUPS SECTION -->
+      <div id="section-writeups" style="display:none;">
+        <div class="section-heading">&gt; My Writeups</div>
+        <div style="text-align:center;padding:3rem;color:var(--text-dim);">
+          <div style="font-size:3rem;margin-bottom:1rem;">📝</div>
+          <p>You haven't published any writeups yet.</p>
+          <a href="writeups.html" class="btn btn-primary" style="margin-top:1.5rem;">&gt; Upload First Writeup</a>
+        </div>
+      </div>
+
+      <!-- ACHIEVEMENTS SECTION -->
+      <div id="section-achievements" style="display:none;">
+        <div class="section-heading">&gt; Team Achievements</div>
+        <div id="dashAchGrid" class="grid-3"></div>
+      </div>
+
+      <!-- PROFILE SECTION -->
+      <div id="section-profile" style="display:none;">
+        <div class="section-heading">&gt; My Profile</div>
+        <div class="card" style="max-width:600px;">
+          <div class="form-group">
+            <label class="form-label">Display Name</label>
+            <input type="text" class="form-input" id="profileName" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="profileEmail" placeholder="email@example.com" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bio</label>
+            <textarea class="form-textarea" id="profileBio" placeholder="Tell the team about yourself..." rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">LinkedIn</label>
+            <input type="url" class="form-input" id="profileLinkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+          <button class="btn btn-primary" onclick="saveProfile()">&gt; Save Changes</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS SECTION -->
+      <div id="section-settings" style="display:none;">
+        <div class="section-heading">&gt; Settings</div>
+        <div class="card" style="max-width:500px;">
+          <div class="form-group">
+            <label class="form-label">Change Password</label>
+            <input type="password" class="form-input" placeholder="New password" style="margin-bottom:0.5rem;">
+            <input type="password" class="form-input" placeholder="Confirm new password">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Notifications</label>
+            <div style="display:flex;flex-direction:column;gap:0.8rem;margin-top:0.5rem;">
+              <label style="display:flex;align-items:center;gap:0.8rem;font-size:0.85rem;color:var(--text-dim);cursor:pointer;">
+                <input type="checkbox" checked style="accent-color:var(--accent);"> CTF announcements
+              </label>
+              <label style="display:flex;align-items:center;gap:0.8rem;font-size:0.85rem;color:var(--text-dim);cursor:pointer;">
+                <input type="checkbox" checked style="accent-color:var(--accent);"> New writeups
+              </label>
+              <label style="display:flex;align-items:center;gap:0.8rem;font-size:0.85rem;color:var(--text-dim);cursor:pointer;">
+                <input type="checkbox" style="accent-color:var(--accent);"> Team messages
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-primary">&gt; Save Settings</button>
+          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+            <button class="btn btn-danger" onclick="logout()" style="width:100%;">&gt; Logout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Require auth
+    const session = getSession();
+    if (!session) window.location.href = 'login.html';
+
+    // Set user info
+    if (session) {
+      const name = session.username || session.email || 'Member';
+      const initials = name.substring(0, 2).toUpperCase();
+      document.getElementById('userAvatar').textContent = initials;
+      document.getElementById('welcomeName').textContent = 'Welcome back, ' + name + '!';
+      document.getElementById('welcomeRole').textContent = session.role === 'admin' ? '⚡ Admin' : '🛡️ Member';
+      document.getElementById('lastLogin').textContent = new Date(session.loginTime).toLocaleString();
+      document.getElementById('profileName').value = name;
+      document.getElementById('profileEmail').value = session.email || '';
+    }
+
+    // Logout
+    document.getElementById('logoutBtn').onclick = logout;
+    function logout() { clearSession(); window.location.href = 'index.html'; }
+
+    // Section switching
+    function showSection(name) {
+      document.querySelectorAll('[id^="section-"]').forEach(el => el.style.display = 'none');
+      document.getElementById('section-' + name).style.display = 'block';
+      document.querySelectorAll('.sidebar-item').forEach(a => a.classList.remove('active'));
+      event.target.classList.add('active');
+      if (name === 'achievements') loadDashAch();
+    }
+
+    async function loadDashAch() {
+      const grid = document.getElementById('dashAchGrid');
+      try {
+        const data = await getData('achievements');
+        const achs = data ? (Array.isArray(data) ? data : Object.values(data)) : LOCAL_DATA.achievements;
+        grid.innerHTML = achs.slice(0, 6).map(a => `
+          <div class="card" style="text-align:center;">
+            <div style="font-size:2.5rem;margin-bottom:0.8rem;">${a.icon}</div>
+            <div style="font-family:var(--font-display);font-size:0.85rem;color:var(--accent2);margin-bottom:0.5rem;">${a.title}</div>
+            <span class="badge badge-purple">${a.place}</span>
+          </div>
+        `).join('');
+      } catch (e) {
+        grid.innerHTML = '<p style="color:var(--text-dim);">Failed to load achievements.</p>';
+      }
+    }
+
+    function saveProfile() { showNotif('Profile saved successfully!', 'success'); }
+  </script>
+</body>
+</html>

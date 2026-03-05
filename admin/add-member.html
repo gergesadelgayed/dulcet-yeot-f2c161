@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Member | EL FLA7EN Admin</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../index.html" class="nav-logo">EL_FLA7EN<span>://</span>ADMIN</a>
+    <ul class="nav-links">
+      <li><a href="panel.html">[ Panel ]</a></li>
+      <li><a href="#" onclick="logout()" class="btn-login" style="background:var(--red);border-color:var(--red);">[LOGOUT]</a></li>
+    </ul>
+  </nav>
+
+  <main style="max-width:700px;margin:0 auto;padding:100px 2rem 4rem;">
+    <div style="margin-bottom:2rem;">
+      <a href="panel.html" style="color:var(--text-dim);text-decoration:none;font-size:0.82rem;">&lt; Back to Panel</a>
+    </div>
+    <div style="font-family:var(--font-display);font-size:1.5rem;color:white;margin-bottom:0.5rem;">Add <span style="color:var(--accent2);">Member</span></div>
+    <p style="color:var(--text-dim);font-size:0.85rem;margin-bottom:2rem;">Add a new member to EL FLA7EN</p>
+
+    <div id="alertBox"></div>
+
+    <div class="card">
+      <form id="addMemberForm">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" class="form-input" id="name" placeholder="Ahmed El Hacker" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role *</label>
+            <select class="form-select" id="role" required>
+              <option value="">-- Select Role --</option>
+              <option value="Team Leader">Team Leader</option>
+              <option value="Web Security">Web Security</option>
+              <option value="Reverse Engineer">Reverse Engineer</option>
+              <option value="Cryptographer">Cryptographer</option>
+              <option value="Network Security">Network Security</option>
+              <option value="OSINT Analyst">OSINT Analyst</option>
+              <option value="Pwn Specialist">Pwn Specialist</option>
+              <option value="Forensics Expert">Forensics Expert</option>
+              <option value="Mobile Security">Mobile Security</option>
+              <option value="Member">Member</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Specialty</label>
+            <input type="text" class="form-input" id="specialty" placeholder="e.g. Penetration Testing">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Join Date</label>
+            <input type="date" class="form-input" id="joinDate">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Bio</label>
+          <textarea class="form-textarea" id="bio" rows="3" placeholder="Brief description about the member..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Skills (comma-separated)</label>
+          <input type="text" class="form-input" id="skills" placeholder="Web Hacking, CTF, OSINT, Burp Suite">
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">LinkedIn URL</label>
+            <input type="url" class="form-input" id="linkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="email" placeholder="member@elfla7en.ctf">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="active">
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </div>
+
+        <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+          <a href="panel.html" class="btn btn-outline" style="flex:1;text-align:center;">&lt; Cancel</a>
+          <button type="submit" class="btn btn-primary" style="flex:2;">&gt; Add Member</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+    <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    const session = getSession();
+    if (!session || session.role !== 'admin') window.location.href = '../login.html';
+    function logout() { clearSession(); window.location.href = '../index.html'; }
+
+    document.getElementById('joinDate').value = new Date().toISOString().split('T')[0];
+
+    document.getElementById('addMemberForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const member = {
+        name: document.getElementById('name').value,
+        role: document.getElementById('role').value,
+        specialty: document.getElementById('specialty').value,
+        bio: document.getElementById('bio').value,
+        skills: document.getElementById('skills').value.split(',').map(s => s.trim()).filter(Boolean),
+        linkedin: document.getElementById('linkedin').value,
+        email: document.getElementById('email').value,
+        joinDate: document.getElementById('joinDate').value,
+        active: document.getElementById('active').value === 'true',
+        addedAt: new Date().toISOString()
+      };
+
+      if (!member.name || !member.role) {
+        document.getElementById('alertBox').innerHTML = '<div class="alert alert-error">Please fill in required fields</div>';
+        return;
+      }
+
+      try {
+        await pushData('members', member);
+        document.getElementById('alertBox').innerHTML = '<div class="alert alert-success">[SUCCESS] Member added successfully! Redirecting...</div>';
+        setTimeout(() => window.location.href = 'panel.html', 2000);
+      } catch (err) {
+        document.getElementById('alertBox').innerHTML = '<div class="alert alert-error">[ERROR] Failed to add member: ' + err.message + '</div>';
+      }
+    });
+  </script>
+</body>
+</html>

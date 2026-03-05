@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EL FLA7EN — A Digital Forensics and Incident Response focused Cyber Security team from FCI LUXOR.">
+  <title>EL FLA7EN | Cyber Security Team</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+    .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--green2), transparent); opacity: 0; transition: opacity 0.3s; }
+    .feature-card:hover { border-color: var(--green2); box-shadow: 0 0 25px rgba(0,255,65,0.12); transform: translateY(-4px); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+    .feature-title { font-family: var(--font-display); font-size: 0.9rem; color: var(--green); margin-bottom: 0.7rem; letter-spacing: 1px; }
+    .feature-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; }
+    .hero-canvas { position: absolute; inset: 0; }
+    .counter { display: inline-block; }
+    .ctf-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 1.5rem; }
+    .milestone-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 2rem; text-align: center; transition: all 0.3s; }
+    .milestone-card:hover { border-color: var(--green2); box-shadow: 0 0 20px rgba(0,255,65,0.12); transform: translateY(-3px); }
+    .milestone-icon { font-size: 2.8rem; display: block; margin-bottom: 1rem; }
+    .milestone-title { font-family: var(--font-display); font-size: 0.85rem; color: var(--green); margin-bottom: 0.5rem; }
+    .milestone-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">EL_FLA7EN<span>://</span>SEC</a>
+    <ul class="nav-links">
+      <li><a href="team.html">[ Team ]</a></li>
+      <li><a href="join.html">[ Join ]</a></li>
+      <li><a href="writeups.html">[ Writeups ]</a></li>
+      <li><a href="login.html" class="btn-login nav-login-link">[ Login ]</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <canvas id="matrixCanvas" class="hero-canvas"></canvas>
+      <div class="hero-content fade-in">
+        <div class="hero-badge">// DIGITAL FORENSICS &amp; CYBER SECURITY TEAM //</div>
+        <h1>
+          EL <span class="glow-text" style="text-shadow:var(--glow-green-strong);color:var(--green);">FLA7EN</span>
+        </h1>
+        <p class="hero-subtitle" style="color:var(--green);">&gt; Cyber Security Team_</p>
+        <p class="hero-desc">
+          A dedicated team of cybersecurity enthusiasts from FCI LUXOR, specializing in Digital Forensics,
+          Incident Response (DFIR), Web Security, and OSINT. We solve CTF challenges and share knowledge
+          to build a stronger security community.
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-num counter" data-target="6" style="color:var(--green);text-shadow:var(--glow-green);">0</span>
+            <span class="stat-label">Members</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num counter" data-target="30" style="color:var(--green);text-shadow:var(--glow-green);">0</span>
+            <span class="stat-label">CTFs Solved</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num counter" data-target="5" style="color:var(--green);text-shadow:var(--glow-green);">0</span>
+            <span class="stat-label">Writeups</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num counter" data-target="2" style="color:var(--green);text-shadow:var(--glow-green);">0</span>
+            <span class="stat-label">Mentors</span>
+          </div>
+        </div>
+        <div class="hero-btns">
+          <a href="team.html" class="btn btn-primary" style="background:var(--green2);border-color:var(--green);color:#000;font-weight:bold;">&gt; Meet The Team</a>
+          <a href="join.html" class="btn btn-outline" style="border-color:var(--green2);color:var(--green);">&gt; Join Us</a>
+          <a href="writeups.html" class="btn btn-outline" style="border-color:var(--green2);color:var(--green);">&gt; Writeups</a>
+        </div>
+        <div class="ctf-badges">
+          <span class="badge badge-green">DFIR Focused</span>
+          <span class="badge badge-cyan">Web Security</span>
+          <span class="badge badge-purple">Digital Forensics</span>
+          <span class="badge badge-yellow">OSINT</span>
+          <span class="badge badge-green">FCI LUXOR</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TERMINAL: ABOUT -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-tag" style="color:var(--green);">// About Us</span>
+        <h2 class="section-title">Who <span style="color:var(--green);text-shadow:var(--glow-green-strong);">We Are</span></h2>
+        <div class="section-line" style="background:linear-gradient(90deg,transparent,var(--green2),transparent);"></div>
+      </div>
+      <div style="max-width:800px;margin:0 auto;">
+        <div class="terminal">
+          <div class="terminal-header">
+            <div class="terminal-dot red"></div>
+            <div class="terminal-dot yellow"></div>
+            <div class="terminal-dot green"></div>
+            <span class="terminal-title">elfla7en@fci-luxor:~$ cat about.txt</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="terminal-prompt-green">root@elfla7en:~$</span><span class="terminal-cmd"> whoami</span></div>
+            <div class="terminal-out" style="color:var(--green);">EL FLA7EN Cyber Security Team — FCI LUXOR</div>
+            <br>
+            <div class="terminal-line"><span class="terminal-prompt-green">root@elfla7en:~$</span><span class="terminal-cmd"> cat mission.txt</span></div>
+            <div class="terminal-out">We are a cybersecurity team from the Faculty of Computers and Information (FCI LUXOR).</div>
+            <div class="terminal-out">Our focus is Digital Forensics, Incident Response (DFIR), and Web Security.</div>
+            <div class="terminal-out">We solve CTF challenges, publish writeups, and grow together as a community.</div>
+            <br>
+            <div class="terminal-line"><span class="terminal-prompt-green">root@elfla7en:~$</span><span class="terminal-cmd"> cat current_focus.txt</span></div>
+            <div class="terminal-out" style="color:var(--yellow);">[!] Currently competing in DFIR challenges</div>
+            <div class="terminal-out">[+] Web Security &amp; Application Analysis</div>
+            <div class="terminal-out">[+] Digital Forensics &amp; Incident Response</div>
+            <div class="terminal-out">[+] OSINT &amp; Open Source Intelligence</div>
+            <div class="terminal-out">[+] CTF Competition — 30 challenges solved</div>
+            <div class="terminal-out">[+] Technical Writeups — 5 published</div>
+            <br>
+            <div class="terminal-line"><span class="terminal-prompt-green">root@elfla7en:~$</span><span class="terminal-cmd" id="typeTarget"> _</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIALIZATIONS -->
+    <section class="section" style="background:var(--bg2);">
+      <div class="section-header">
+        <span class="section-tag" style="color:var(--green);">// Specializations</span>
+        <h2 class="section-title">What We <span style="color:var(--green);text-shadow:var(--glow-green-strong);">Do</span></h2>
+        <div class="section-line" style="background:linear-gradient(90deg,transparent,var(--green2),transparent);"></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🔍</span>
+          <h3 class="feature-title">DFIR</h3>
+          <p class="feature-desc">Digital Forensics &amp; Incident Response — Our primary focus. Memory forensics, disk imaging, log analysis, and incident timeline reconstruction.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🌐</span>
+          <h3 class="feature-title">Web Security</h3>
+          <p class="feature-desc">Web application penetration testing, OWASP Top 10 exploitation, SQL injection, XSS, authentication bypass, and API security analysis.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🕵️</span>
+          <h3 class="feature-title">OSINT</h3>
+          <p class="feature-desc">Open Source Intelligence — tracking digital footprints, social media investigation, threat intelligence, and reconnaissance techniques.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🖥️</span>
+          <h3 class="feature-title">Digital Forensics</h3>
+          <p class="feature-desc">Evidence collection, file system analysis, network forensics, PCAP analysis, and building forensic reports using industry tools.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🎯</span>
+          <h3 class="feature-title">CTF Competitions</h3>
+          <p class="feature-desc">Active participation in Capture The Flag competitions. 30+ challenges solved across Web, Forensics, OSINT, and DFIR categories.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">📝</span>
+          <h3 class="feature-title">Technical Writeups</h3>
+          <p class="feature-desc">Publishing detailed technical writeups to share knowledge and help the community understand real-world security techniques.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MILESTONES (honest achievements) -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-tag" style="color:var(--green);">// Progress</span>
+        <h2 class="section-title">Our <span style="color:var(--green);text-shadow:var(--glow-green-strong);">Milestones</span></h2>
+        <div class="section-line" style="background:linear-gradient(90deg,transparent,var(--green2),transparent);"></div>
+        <p class="section-desc" style="color:var(--text-dim);margin-top:0.5rem;">We're growing — here's where we stand today.</p>
+      </div>
+      <div class="grid-3" style="max-width:1000px;margin:0 auto;">
+        <div class="milestone-card">
+          <span class="milestone-icon">🎯</span>
+          <h3 class="milestone-title">30 CTF Challenges Solved</h3>
+          <p class="milestone-desc">Solved 30 Capture The Flag challenges across Web Security, OSINT, Digital Forensics, and DFIR categories on multiple platforms.</p>
+          <div style="margin-top:1rem;"><span class="badge badge-green">In Progress</span></div>
+        </div>
+        <div class="milestone-card">
+          <span class="milestone-icon">📝</span>
+          <h3 class="milestone-title">5 Technical Writeups</h3>
+          <p class="milestone-desc">Published 5 in-depth technical writeups covering DFIR investigation techniques, web vulnerabilities, OSINT, and network forensics.</p>
+          <div style="margin-top:1rem;"><span class="badge badge-cyan">Published</span></div>
+        </div>
+        <div class="milestone-card">
+          <span class="milestone-icon">🔍</span>
+          <h3 class="milestone-title">Active DFIR Participation</h3>
+          <p class="milestone-desc">Currently competing in Digital Forensics and Incident Response challenges, building advanced forensic skills under expert mentorship.</p>
+          <div style="margin-top:1rem;"><span class="badge badge-yellow">Competing Now</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN CTA -->
+    <section class="section" style="text-align:center;background:radial-gradient(ellipse at 50% 50%, rgba(0,255,65,0.04), transparent 70%);">
+      <span class="section-tag" style="color:var(--green);">// Recruitment</span>
+      <h2 class="section-title" style="margin-bottom:1rem;">Join <span style="color:var(--green);text-shadow:var(--glow-green-strong);">EL FLA7EN</span></h2>
+      <p style="color:var(--text-dim);max-width:500px;margin:0 auto 2rem;font-size:0.9rem;line-height:1.8;">
+        We are looking for passionate individuals interested in Digital Forensics, Web Security, OSINT,
+        and CTF challenges. If you love cybersecurity, apply to join our team.
+      </p>
+      <a href="join.html" class="btn btn-primary" style="font-size:1rem;padding:16px 40px;background:var(--green2);border-color:var(--green);color:#000;font-weight:bold;">&gt; Apply Now</a>
+    </section>
+  </main>
+
+  <footer>
+    <span class="footer-logo">EL_FLA7EN://SEC</span>
+    <p>&copy; 2025 EL FLA7EN Cyber Security Team — All rights reserved</p>
+    <p style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-dim);">// Digital Forensics &amp; Incident Response // FCI LUXOR //</p>
+    <div class="footer-credit">web made by : <span>Gerges Adel</span></div>
+  </footer>
+
+    <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Matrix Rain
+    const canvas = document.getElementById('matrixCanvas');
+    if (canvas) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+      const chars = '01アイウエオ@#$%ABCXYZ';
+      const fontSize = 13, cols = Math.floor(canvas.width / fontSize);
+      const drops = Array(cols).fill(1);
+      (function drawMatrix() {
+        ctx.fillStyle = 'rgba(4,10,4,0.04)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = fontSize + 'px Share Tech Mono';
+        for (let i = 0; i < drops.length; i++) {
+          ctx.fillStyle = Math.random() > 0.95 ? '#00ff41cc' : '#00ff4122';
+          ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+        requestAnimationFrame(drawMatrix);
+      })();
+    }
+
+    // Counter animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        let cur = 0;
+        const step = target / 80;
+        const t = setInterval(() => {
+          cur = Math.min(cur + step, target);
+          el.textContent = Math.floor(cur) + '+';
+          if (cur >= target) clearInterval(t);
+        }, 20);
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(el => observer.observe(el));
+
+    // Typing effect
+    setTimeout(() => {
+      typeEffect(document.getElementById('typeTarget'), 'cat flag.txt  >> FLAG{EL_FLA7EN_DFIR_2025}', 55);
+    }, 800);
+  </script>
+</body>
+</html>

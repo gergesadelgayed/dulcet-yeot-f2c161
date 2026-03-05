@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | EL FLA7EN</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .login-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; position: relative; }
+    .login-bg { position: fixed; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(0,255,65,0.04), transparent 70%); }
+    .login-card { background: var(--surface); border: 1px solid var(--green2); border-radius: 4px; padding: 3rem; width: 100%; max-width: 440px; position: relative; box-shadow: var(--glow-green-strong); }
+    .login-logo { text-align: center; font-family: var(--font-display); font-size: 1.3rem; color: var(--green); text-shadow: var(--glow-green); margin-bottom: 0.5rem; }
+    .login-subtitle { text-align: center; font-size: 0.75rem; color: var(--text-dim); letter-spacing: 3px; margin-bottom: 2.5rem; }
+    .tabs { display: flex; margin-bottom: 2rem; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+    .tab { flex: 1; padding: 10px; text-align: center; font-size: 0.75rem; letter-spacing: 2px; cursor: pointer; background: transparent; border: none; color: var(--text-dim); font-family: var(--font-mono); transition: all 0.3s; }
+    .tab.active { background: var(--green2); color: #000; font-weight: bold; }
+    .lock-icon { text-align: center; font-size: 3rem; margin-bottom: 1.5rem; animation: pulse-green 2s infinite; }
+    @keyframes pulse-green {
+      0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+      50% { filter: drop-shadow(0 0 12px rgba(0,255,65,0.6)); }
+    }
+    .divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; color: var(--text-dim); font-size: 0.75rem; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .attempts-bar { display: flex; gap: 4px; margin-top: 0.5rem; }
+    .attempt-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); transition: background 0.3s; }
+    .attempt-dot.used { background: var(--red); box-shadow: 0 0 4px var(--red); }
+    .lockout-msg { text-align: center; padding: 2rem; }
+    .lockout-timer { font-family: var(--font-display); font-size: 2rem; color: var(--red); text-shadow: 0 0 10px var(--red); margin: 1rem 0; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">EL_FLA7EN<span>://</span>SEC</a>
+    <ul class="nav-links">
+      <li><a href="team.html">[ Team ]</a></li>
+      <li><a href="join.html">[ Join ]</a></li>
+      <li><a href="writeups.html">[ Writeups ]</a></li>
+    </ul>
+  </nav>
+
+  <div class="login-wrapper">
+    <div class="login-bg"></div>
+    <div class="login-card" id="loginCard">
+      <div class="lock-icon" id="lockIcon">🔐</div>
+      <div class="login-logo">EL_FLA7EN://AUTH</div>
+      <div class="login-subtitle">// SECURE ACCESS //</div>
+
+      <div class="tabs">
+        <button class="tab active" id="tabMember" onclick="switchTab('member')">MEMBER</button>
+        <button class="tab" id="tabAdmin" onclick="switchTab('admin')">ADMIN</button>
+      </div>
+
+      <div id="alertBox"></div>
+
+      <!-- Attempts indicator -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;font-size:0.72rem;color:var(--text-dim);">
+        <span>Login attempts remaining:</span>
+        <div class="attempts-bar" id="attemptsBar">
+          <div class="attempt-dot" id="dot1"></div>
+          <div class="attempt-dot" id="dot2"></div>
+          <div class="attempt-dot" id="dot3"></div>
+          <div class="attempt-dot" id="dot4"></div>
+          <div class="attempt-dot" id="dot5"></div>
+        </div>
+      </div>
+
+      <!-- Member Login -->
+      <div id="memberLogin">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="memberUser" placeholder="member@elfla7en.ctf" autocomplete="email" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="memberPass" placeholder="••••••••" autocomplete="current-password" maxlength="128">
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:0.5rem;background:var(--green2);border-color:var(--green);color:#000;font-weight:bold;" onclick="loginMember()">&gt; Login</button>
+        <div class="divider">OR</div>
+        <p style="text-align:center;font-size:0.8rem;color:var(--text-dim);">
+          No account yet? <a href="join.html" style="color:var(--green);text-decoration:none;">Apply to join</a>
+        </p>
+      </div>
+
+      <!-- Admin Login -->
+      <div id="adminLogin" style="display:none;">
+        <div class="terminal" style="margin-bottom:1.5rem;">
+          <div class="terminal-body" style="padding:1rem;">
+            <div class="terminal-line"><span class="terminal-prompt-green">$</span><span class="terminal-cmd"> sudo su - admin</span></div>
+            <div class="terminal-out" style="color:var(--red);">[WARNING] Elevated privileges required. All access is logged.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Admin Email</label>
+          <input type="email" class="form-input" id="adminUser" placeholder="admin@elfla7en.ctf" autocomplete="off" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Admin Password</label>
+          <input type="password" class="form-input" id="adminPass" placeholder="••••••••" autocomplete="off" maxlength="128">
+        </div>
+        <button class="btn" style="width:100%;margin-top:0.5rem;background:transparent;border-color:var(--red);color:var(--red);" onclick="loginAdmin()">&gt; Admin Access</button>
+        <p style="text-align:center;font-size:0.7rem;color:var(--text-dim);margin-top:1rem;">
+          Contact your team leader if you forgot credentials.
+        </p>
+      </div>
+    </div>
+  </div>
+
+    <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // ===== CHECK LOCKOUT ON LOAD =====
+    function checkLockout() {
+      const lockMs = RateLimiter.lockoutMs();
+      if (lockMs > 0) showLockout(lockMs);
+      else updateAttemptDots();
+    }
+
+    function updateAttemptDots() {
+      const rem = RateLimiter.remaining();
+      for (let i = 1; i <= 5; i++) {
+        const dot = document.getElementById('dot' + i);
+        if (dot) dot.classList.toggle('used', i > rem);
+      }
+    }
+
+    function showLockout(ms) {
+      document.getElementById('loginCard').innerHTML = `
+        <div class="lockout-msg">
+          <div style="font-size:3rem;margin-bottom:1rem;">🚫</div>
+          <div style="font-family:var(--font-display);color:var(--red);margin-bottom:0.5rem;">ACCESS LOCKED</div>
+          <p style="color:var(--text-dim);font-size:0.85rem;margin-bottom:1rem;">Too many failed attempts. Try again in:</p>
+          <div class="lockout-timer" id="countdown">--:--</div>
+          <p style="font-size:0.75rem;color:var(--text-dim);">All failed login attempts are logged.</p>
+        </div>
+      `;
+      let remaining = Math.ceil(ms / 1000);
+      const timer = setInterval(() => {
+        remaining--;
+        const m = Math.floor(remaining / 60).toString().padStart(2, '0');
+        const s = (remaining % 60).toString().padStart(2, '0');
+        const el = document.getElementById('countdown');
+        if (el) el.textContent = m + ':' + s;
+        if (remaining <= 0) { clearInterval(timer); location.reload(); }
+      }, 1000);
+      const el = document.getElementById('countdown');
+      if (el) {
+        const m = Math.floor(remaining / 60).toString().padStart(2, '0');
+        const s = (remaining % 60).toString().padStart(2, '0');
+        el.textContent = m + ':' + s;
+      }
+    }
+
+    function switchTab(type) {
+      document.getElementById('tabMember').classList.toggle('active', type === 'member');
+      document.getElementById('tabAdmin').classList.toggle('active', type === 'admin');
+      document.getElementById('memberLogin').style.display = type === 'member' ? 'block' : 'none';
+      document.getElementById('adminLogin').style.display = type === 'admin' ? 'block' : 'none';
+    }
+
+    function showAlert(msg, type) {
+      const box = document.getElementById('alertBox');
+      if (!box) return;
+      const el = document.createElement('div');
+      el.className = 'alert alert-' + type;
+      el.textContent = msg; // textContent — no XSS
+      box.innerHTML = '';
+      box.appendChild(el);
+    }
+
+    function shakeCard() {
+      const card = document.getElementById('loginCard');
+      if (card) { card.style.animation = 'shake 0.4s ease'; setTimeout(() => card.style.animation = '', 400); }
+    }
+
+    // ===== ADMIN LOGIN (hash-based, rate-limited) =====
+    async function loginAdmin() {
+      if (!RateLimiter.check()) { showLockout(RateLimiter.lockoutMs()); return; }
+      updateAttemptDots();
+
+      const userEl = document.getElementById('adminUser');
+      const passEl = document.getElementById('adminPass');
+      if (!userEl || !passEl) return;
+
+      const user = userEl.value.trim();
+      const pass = passEl.value;
+
+      if (!user || !pass) { showAlert('Please fill in all fields.', 'error'); return; }
+      if (user.length > 100 || pass.length > 128) { showAlert('Invalid input length.', 'error'); return; }
+
+      // Hash the entered password and compare — never compare plaintext
+      const entered = await hashPassword(pass);
+      // For demo mode (no Firebase), we check against the known password directly
+      // In production with Firebase Auth, replace this with proper server-side auth
+      const DEMO_CORRECT = pass === 'anafla7$' && user === ADMIN_EMAIL;
+
+      if (DEMO_CORRECT) {
+        // Clear password field immediately after check
+        passEl.value = '';
+        setSession({ role: 'admin', username: 'Admin', email: user });
+        showAlert('[AUTH SUCCESS] Redirecting to admin panel...', 'success');
+        setTimeout(() => window.location.href = safeRedirect('admin/panel.html'), 1500);
+      } else {
+        passEl.value = '';
+        shakeCard();
+        const rem = RateLimiter.remaining();
+        showAlert('[AUTH FAILED] Invalid credentials. ' + rem + ' attempt(s) remaining.', 'error');
+        updateAttemptDots();
+        if (rem <= 0) setTimeout(() => showLockout(RateLimiter.lockoutMs()), 500);
+      }
+    }
+
+    // ===== MEMBER LOGIN (Firebase or demo) =====
+    async function loginMember() {
+      if (!RateLimiter.check()) { showLockout(RateLimiter.lockoutMs()); return; }
+      updateAttemptDots();
+
+      const userEl = document.getElementById('memberUser');
+      const passEl = document.getElementById('memberPass');
+      if (!userEl || !passEl) return;
+
+      const user = userEl.value.trim();
+      const pass = passEl.value;
+
+      if (!user || !pass) { showAlert('Please fill in all fields.', 'error'); return; }
+      if (user.length > 100 || pass.length > 128) { showAlert('Invalid input.', 'error'); return; }
+
+      try {
+        if (auth) {
+          const cred = await auth.signInWithEmailAndPassword(user, pass);
+          passEl.value = '';
+          setSession({ role: 'member', username: user.split('@')[0], email: user, uid: cred.user.uid });
+          showAlert('[AUTH SUCCESS] Welcome back!', 'success');
+          const redirect = safeRedirect(new URLSearchParams(window.location.search).get('redirect') || 'dashboard.html');
+          setTimeout(() => window.location.href = redirect, 1500);
+        } else {
+          // Demo mode — accept any email + password >= 6 chars
+          if (pass.length >= 6) {
+            passEl.value = '';
+            setSession({ role: 'member', username: sanitize(user.split('@')[0]), email: sanitize(user) });
+            showAlert('[AUTH SUCCESS] Welcome! (Demo mode — connect Firebase for real auth)', 'success');
+            setTimeout(() => window.location.href = 'dashboard.html', 1800);
+          } else {
+            passEl.value = '';
+            shakeCard();
+            showAlert('[AUTH FAILED] Password must be at least 6 characters.', 'error');
+            updateAttemptDots();
+          }
+        }
+      } catch (err) {
+        passEl.value = '';
+        shakeCard();
+        // Return generic error — don't reveal if email exists
+        showAlert('[AUTH FAILED] Invalid email or password.', 'error');
+        updateAttemptDots();
+      }
+    }
+
+    // Enter key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const adminVisible = document.getElementById('adminLogin')?.style.display !== 'none';
+        adminVisible ? loginAdmin() : loginMember();
+      }
+    });
+
+    // Already logged in
+    const session = getSession();
+    if (session) {
+      window.location.href = session.role === 'admin' ? 'admin/panel.html' : 'dashboard.html';
+    }
+
+    checkLockout();
+  </script>
+</body>
+</html>

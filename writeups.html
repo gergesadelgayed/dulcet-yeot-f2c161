@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writeups | EL FLA7EN</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .cat-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; justify-content: center; }
+    .cat-tab { font-family: var(--font-mono); font-size: 0.75rem; padding: 7px 18px; background: transparent; border: 1px solid var(--border); color: var(--text-dim); cursor: pointer; transition: all 0.3s; letter-spacing: 1px; border-radius: 2px; }
+    .cat-tab:hover { border-color: var(--accent); color: var(--accent2); }
+    .cat-tab.active { background: var(--accent); border-color: var(--accent2); color: white; box-shadow: var(--glow); }
+    .cat-tab[data-cat="Web"].active { background: #1a6b9a; border-color: var(--cyan); }
+    .cat-tab[data-cat="Crypto"].active { background: #6b1a9a; }
+    .cat-tab[data-cat="Pwn"].active { background: #9a1a1a; border-color: var(--red); }
+    .cat-tab[data-cat="Forensics"].active { background: #1a9a6b; border-color: var(--green); }
+    .cat-tab[data-cat="OSINT"].active { background: #7a6b1a; border-color: var(--yellow); }
+    .writeup-card { display: flex; flex-direction: column; gap: 0.8rem; }
+    .writeup-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .diff-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 2px; }
+    .diff-Easy { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.3); }
+    .diff-Medium { background: rgba(255,215,0,0.1); color: var(--yellow); border: 1px solid rgba(255,215,0,0.3); }
+    .diff-Hard { background: rgba(255,51,102,0.1); color: var(--red); border: 1px solid rgba(255,51,102,0.3); }
+    .writeup-title { font-family: var(--font-display); font-size: 0.95rem; color: white; }
+    .writeup-title a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .writeup-title a:hover { color: var(--accent2); }
+    .writeup-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; }
+    .writeup-footer { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim); border-top: 1px solid var(--border); padding-top: 0.8rem; margin-top: 0.3rem; }
+    .upload-zone { border: 2px dashed var(--border); border-radius: 4px; padding: 3rem; text-align: center; cursor: pointer; transition: all 0.3s; }
+    .upload-zone:hover, .upload-zone.dragover { border-color: var(--accent); background: rgba(138,43,226,0.05); }
+    .upload-section { max-width: 700px; margin: 0 auto 4rem; }
+    .search-bar { max-width: 500px; margin: 0 auto 2rem; position: relative; }
+    .search-bar input { padding-left: 2.5rem; }
+    .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 0.9rem; }
+    .cat-color-Web { color: var(--cyan); }
+    .cat-color-Crypto { color: var(--accent2); }
+    .cat-color-Pwn { color: var(--red); }
+    .cat-color-Forensics { color: var(--green); }
+    .cat-color-OSINT { color: var(--yellow); }
+    .cat-color-Reverse { color: #ff8c00; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">EL_FLA7EN<span>://</span>SEC</a>
+    <ul class="nav-links">
+      <li><a href="team.html">[ Team ]</a></li>
+      <li><a href="join.html">[ Join ]</a></li>
+      <li><a href="writeups.html" class="active">[ Writeups ]</a></li>
+      <li><a href="achievements.html">[ Achievements ]</a></li>
+      <li><a href="login.html" class="btn-login nav-login-link">Login</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <span class="section-tag">// Knowledge Base</span>
+      <h1 style="font-family:var(--font-display);color:white;">CTF <span style="color:var(--accent2);text-shadow:var(--glow);">Writeups</span></h1>
+      <p>Detailed solutions and techniques — sharing knowledge with the community</p>
+    </div>
+
+    <section class="section">
+      <!-- Upload Section (for logged in members) -->
+      <div class="upload-section" id="uploadSection" style="display:none;">
+        <div class="card" style="margin-bottom:2rem;">
+          <h3 style="font-family:var(--font-display);font-size:0.9rem;color:var(--accent2);margin-bottom:1.5rem;">&gt; Upload New Writeup</h3>
+          <form id="uploadForm">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+              <div class="form-group" style="margin:0;">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-input" id="wpTitle" placeholder="Challenge Name - Writeup">
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label">Category</label>
+                <select class="form-select" id="wpCat">
+                  <option value="Web">Web</option>
+                  <option value="Crypto">Crypto</option>
+                  <option value="Pwn">Pwn</option>
+                  <option value="Reverse">Reverse</option>
+                  <option value="Forensics">Forensics</option>
+                  <option value="OSINT">OSINT</option>
+                  <option value="Misc">Misc</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+              <div class="form-group" style="margin:0;">
+                <label class="form-label">CTF Name</label>
+                <input type="text" class="form-input" id="wpCtf" placeholder="AC3 2024">
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label">Difficulty</label>
+                <select class="form-select" id="wpDiff">
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <textarea class="form-textarea" id="wpDesc" rows="3" placeholder="Brief description of the challenge and approach..."></textarea>
+            </div>
+            <div class="upload-zone" id="uploadZone">
+              <div style="font-size:2rem;margin-bottom:0.5rem;">📄</div>
+              <p style="color:var(--text-dim);font-size:0.85rem;">Drop PDF/Markdown writeup here or <span style="color:var(--accent2);">click to browse</span></p>
+              <input type="file" id="fileInput" style="display:none;" accept=".pdf,.md,.txt">
+              <p id="fileName" style="color:var(--green);font-size:0.8rem;margin-top:0.5rem;"></p>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1rem;">&gt; Publish Writeup</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="form-input" id="searchInput" placeholder="Search writeups..." onkeyup="filterWriteups()">
+      </div>
+
+      <!-- Category Filter -->
+      <div class="cat-tabs">
+        <button class="cat-tab active" data-cat="all" onclick="filterBycat('all')">All</button>
+        <button class="cat-tab" data-cat="Web" onclick="filterBycat('Web')">🌐 Web</button>
+        <button class="cat-tab" data-cat="Crypto" onclick="filterBycat('Crypto')">🔐 Crypto</button>
+        <button class="cat-tab" data-cat="Pwn" onclick="filterBycat('Pwn')">💥 Pwn</button>
+        <button class="cat-tab" data-cat="Reverse" onclick="filterBycat('Reverse')">🔬 Reverse</button>
+        <button class="cat-tab" data-cat="Forensics" onclick="filterBycat('Forensics')">🔭 Forensics</button>
+        <button class="cat-tab" data-cat="OSINT" onclick="filterBycat('OSINT')">🕵️ OSINT</button>
+        <button class="cat-tab" data-cat="Misc" onclick="filterBycat('Misc')">🎯 Misc</button>
+      </div>
+
+      <!-- Writeups Grid -->
+      <div class="grid-3" id="writeupsGrid">
+        <div style="text-align:center;color:var(--text-dim);padding:3rem;grid-column:1/-1;">
+          <div class="loading-spinner"></div>
+          <p style="margin-top:1rem;font-size:0.85rem;">Loading writeups...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="footer-logo">EL_FLA7EN://SEC</span>
+    <p>&copy; 2025 EL FLA7EN Cyber Security Team — All rights reserved</p>
+    <div class="footer-credit">web made by : <span>Gerges Adel</span></div>
+  </footer>
+
+    <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    let allWriteups = [];
+    let currentCat = 'all';
+
+    const CAT_ICONS = { Web: '🌐', Crypto: '🔐', Pwn: '💥', Reverse: '🔬', Forensics: '🔭', OSINT: '🕵️', Misc: '🎯' };
+
+    function renderWriteups(wps) {
+      const grid = document.getElementById('writeupsGrid');
+      if (!wps.length) {
+        grid.innerHTML = '<div style="text-align:center;color:var(--text-dim);padding:3rem;grid-column:1/-1;">No writeups found.</div>';
+        return;
+      }
+      grid.innerHTML = wps.map(w => `
+        <div class="card writeup-card" data-cat="${w.category}">
+          <div class="writeup-meta">
+            <span class="badge badge-purple">${CAT_ICONS[w.category] || '🎯'} ${w.category}</span>
+            <span class="diff-badge diff-${w.difficulty}">${w.difficulty}</span>
+            <span style="font-size:0.7rem;color:var(--text-dim);">${w.ctf || ''}</span>
+          </div>
+          <h3 class="writeup-title"><a href="${w.url || '#'}">${w.title}</a></h3>
+          <p class="writeup-desc">${w.description || ''}</p>
+          <div class="writeup-footer">
+            <span>✍️ ${w.author}</span>
+            <span>${w.date ? new Date(w.date).toLocaleDateString('en-GB') : ''}</span>
+            <a href="${w.url || '#'}" style="color:var(--accent2);text-decoration:none;font-size:0.75rem;">&gt; Read More</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterBycat(cat) {
+      currentCat = cat;
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`[data-cat="${cat}"]`).classList.add('active');
+      filterWriteups();
+    }
+
+    function filterWriteups() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      let filtered = allWriteups;
+      if (currentCat !== 'all') filtered = filtered.filter(w => w.category === currentCat);
+      if (q) filtered = filtered.filter(w => 
+        w.title.toLowerCase().includes(q) || 
+        (w.description || '').toLowerCase().includes(q) ||
+        (w.author || '').toLowerCase().includes(q)
+      );
+      renderWriteups(filtered);
+    }
+
+    async function loadWriteups() {
+      try {
+        const data = await getData('writeups');
+        allWriteups = data ? (Array.isArray(data) ? data : Object.values(data)) : LOCAL_DATA.writeups;
+        renderWriteups(allWriteups);
+      } catch (e) {
+        allWriteups = LOCAL_DATA.writeups;
+        renderWriteups(allWriteups);
+      }
+    }
+
+    // Upload zone
+    const zone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    if (zone) {
+      zone.onclick = () => fileInput.click();
+      zone.ondragover = e => { e.preventDefault(); zone.classList.add('dragover'); };
+      zone.ondragleave = () => zone.classList.remove('dragover');
+      zone.ondrop = e => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        if (e.dataTransfer.files[0]) {
+          document.getElementById('fileName').textContent = '📎 ' + e.dataTransfer.files[0].name;
+        }
+      };
+      fileInput.onchange = () => {
+        if (fileInput.files[0]) document.getElementById('fileName').textContent = '📎 ' + fileInput.files[0].name;
+      };
+    }
+
+    // Show upload section for logged in members
+    const session = getSession();
+    if (session) document.getElementById('uploadSection').style.display = 'block';
+
+    // Upload form
+    const uploadForm = document.getElementById('uploadForm');
+    if (uploadForm) {
+      uploadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const wp = {
+          title: document.getElementById('wpTitle').value,
+          category: document.getElementById('wpCat').value,
+          ctf: document.getElementById('wpCtf').value,
+          difficulty: document.getElementById('wpDiff').value,
+          description: document.getElementById('wpDesc').value,
+          author: session?.username || 'Anonymous',
+          date: new Date().toISOString(),
+          url: '#'
+        };
+        if (!wp.title) { showNotif('Please enter a title', 'error'); return; }
+        await pushData('writeups', wp);
+        allWriteups.unshift(wp);
+        renderWriteups(allWriteups);
+        uploadForm.reset();
+        document.getElementById('fileName').textContent = '';
+        showNotif('Writeup published successfully!', 'success');
+      });
+    }
+
+    loadWriteups();
+  </script>
+</body>
+</html>

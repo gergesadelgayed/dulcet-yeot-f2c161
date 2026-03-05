@@ -1,0 +1,10 @@
+/team           /team.html          200
+/join           /join.html          200
+/login          /login.html         200
+/writeups       /writeups.html      200
+/dashboard      /dashboard.html     200
+/achievements   /achievements.html  200
+/admin/panel    /admin/panel.html   200
+/admin/add-member /admin/add-member.html 200
+/admin/edit-member /admin/edit-member.html 200
+/*              /index.html         200
