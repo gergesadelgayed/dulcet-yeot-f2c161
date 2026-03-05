@@ -183,7 +183,15 @@
     async function loadAll() {
       try {
         const data = await getData('members');
-        const members = data ? (Array.isArray(data) ? data : Object.values(data)) : LOCAL_DATA.members;
+        // Merge: start with LOCAL_DATA base members, then add any Firebase-added members
+        let members = [...LOCAL_DATA.members];
+        if (data) {
+          const firebaseMembers = Array.isArray(data) ? data : Object.values(data);
+          // Only add Firebase members that are NOT already in LOCAL_DATA (avoid duplicates)
+          const localIds = new Set(LOCAL_DATA.members.map(m => m.id));
+          const newMembers = firebaseMembers.filter(m => !localIds.has(m.id));
+          members = [...members, ...newMembers];
+        }
         renderTeam(members);
       } catch (e) {
         renderTeam(LOCAL_DATA.members);
